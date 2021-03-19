@@ -20,7 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01ce0b96-dd43-4159-b367-b5c4ea2327a5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/tests/goss/goss.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/tests/goss/goss.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pipeline/publish.bash" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline/publish.bash" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +55,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1616174247056</updated>
-      <workItem from="1616174248713" duration="2504000" />
+      <workItem from="1616174248713" duration="2707000" />
     </task>
     <servers />
   </component>
@@ -73,9 +74,9 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="597" y="315" width="598" height="548" key="find.popup" timestamp="1616181510968">
+    <state x="597" y="315" width="598" height="548" key="find.popup" timestamp="1616183499668">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="597" y="315" width="598" height="548" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1616181510968" />
+    <state x="597" y="315" width="598" height="548" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1616183499668" />
   </component>
 </project>

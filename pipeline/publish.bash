@@ -31,7 +31,7 @@ function usage()
 # parameters: version architecture region value
 function updateSSM()
 {
-    name="/aws/service/Kubernetes/optimized-ami/$1/$2/recommended/image_id"
+    name="/falco/service/Kubernetes/optimized-ami/$1/$2/recommended/image_id"
     echo "updating $name in region: $3"
 
     ssm_ver=$(aws ssm put-parameter --region "$3" --name "$name" --value "$4" --type String --overwrite --query "Version" --output text)
