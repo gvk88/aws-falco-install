@@ -11,7 +11,7 @@ if [ "$(arch)" != "x86_64" ]; then
         echo "unsupported cpu architecture. exiting."
         exit 0
 fi
-
+yum install -y go git 
 target="amazonlinux2"
 kernel_release=$(uname -r)
 kernel_version=$(uname -v|cut -b 2)
