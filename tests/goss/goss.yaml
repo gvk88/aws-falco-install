@@ -1,0 +1,218 @@
+port:
+  tcp:22:
+    listening: true
+    ip:
+      - 0.0.0.0
+  tcp6:22:
+    listening: true
+    ip:
+      - '::'
+service:
+  sshd:
+    enabled: true
+    running: true
+  tmp.mount:
+    enabled: true
+    running: true
+  clamscan.timer:
+    enabled: true
+    running: false
+  clamscan.service:
+    enabled: true
+    running: false
+  clamscan-onboot.timer:
+    enabled: true
+    running: false
+  {{if eq .Env.aws_linux_arch "amazon-linux-2"}}
+  clamonacc.service:
+    enabled: false
+    running: false
+  clamav-clamonacc.service:
+    enabled: false
+    running: false
+  clamav-freshclam.service:
+    enabled: false
+    running: false
+  {{end}}
+user:
+  sshd:
+    exists: true
+    uid: 74
+    gid: 74
+    groups:
+      - sshd
+    home: /var/empty/sshd
+    shell: /sbin/nologin
+group:
+  sshd:
+    exists: true
+    gid: 74
+process:
+  sshd:
+    running: true
+file:
+  /var/lib/aide/aide.db.gz:
+    filetype: file
+    mode: "0600"
+    exists: true
+    owner: root
+    group: root
+  /boot/grub2/grub.cfg:
+    filetype: file
+    mode: "0600"
+    exists: true
+    owner: root
+    group: root
+  /etc/cron.d/aide:
+    filetype: file
+    mode: "0644"
+    exists: true
+    owner: root
+    group: root
+  /etc/modprobe.d/cramfs.conf:
+    filetype: file
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /etc/modprobe.d/hfs.conf:
+    filetype: file
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /etc/modprobe.d/hfsplus.conf:
+    filetype: file
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /etc/modprobe.d/squashfs.conf:
+    filetype: file
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /etc/modprobe.d/udf.conf:
+    filetype: file
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+  /var/log/clamscan.log:
+    filetype: file
+    exists: true
+    mode: "0640"
+    owner: root
+    group: root
+  /var/log/freshclam.log:
+    filetype: file
+    exists: true
+    mode: "0640"
+    owner: root
+    group: clamupdate
+  /etc/docker:
+    filetype: directory
+    mode: "0755"
+    exists: true
+    owner: root
+    group: root
+  /etc/default:
+    filetype: directory
+    mode: "0755"
+    exists: true
+    owner: root
+    group: root
+  /etc/sysconfig:
+    filetype: directory
+    mode: "0755"
+    exists: true
+    owner: root
+    group: root
+  /etc/docker/certs.d:
+    filetype: directory
+    mode: "0444"
+    exists: true
+    owner: root
+    group: root
+  /etc/default/docker:
+    filetype: file
+    mode: "0644"
+    exists: true
+    owner: root
+    group: root
+  /etc/sysconfig/docker:
+    filetype: file
+    mode: "0644"
+    exists: true
+    owner: root
+    group: root
+  /etc/kubernetes/kubelet/kubelet-config.json:
+    mode: "0644"
+    filetype: file
+    exists: true
+    owner: root
+    group: root
+  /var/lib/kubelet/kubeconfig:
+    mode: "0644"
+    filetype: file
+    exists: true
+    owner: root
+    group: root
+  /var/log/audit:
+    filetype: directory
+    mode: "0700"
+    exists: true
+    owner: root
+    group: root
+  /var/lib/docker:
+    filetype: directory
+    mode: "0711"
+    exists: true
+    owner: root
+    group: root
+  /var/tmp:
+    filetype: directory
+    exists: true
+    owner: root
+    group: root
+  {{if eq .Env.aws_linux_arch "amazon-linux-2"}}
+  /usr/share/falco:
+    exists: true
+    filetype: directory
+  /usr/share/falco/falco_module.ko:
+    filetype: file
+    exists: true
+    owner: root
+    group: root
+  /usr/share/falco/falco_probe.o:
+    filetype: file
+    exists: true
+    owner: root
+    group: root
+  {{end}}
+mount:
+  /var:
+    exists: true
+    source: /dev/nvme1n1p1
+    filesystem: ext4
+  /var/tmp:
+    exists: true
+    source: /dev/nvme1n1p2
+    filesystem: ext4
+  /var/log:
+    exists: true
+    source: /dev/nvme1n1p3
+    filesystem: ext4
+  /var/log/audit:
+    exists: true
+    source: /dev/nvme1n1p4
+    filesystem: ext4
+  /home:
+    exists: true
+    source: /dev/nvme1n1p5
+    filesystem: ext4
+  /var/lib/docker:
+    exists: true
+    source: /dev/nvme1n1p6
+    filesystem: ext4

@@ -1,0 +1,114 @@
+{
+  "variables": {
+    "team": "atlas",
+    "ami_name": null,
+    "goss_arch": null,
+    "aws_linux_arch": null,
+    "instance_type": null,
+    "build_id": "{{uuid}}",
+    "cleanup_image": "true",
+    "data_volume_size": "50",
+    "repo": "aws/Kubernetes-ami",
+    "kubernetes_version": null,
+    "ssh_username": "ec2-user",
+    "creator": "{{env `USER`}}",
+    "branch": "{{env `GIT_BRANCH`}}",
+    "commit": "{{env `GIT_COMMIT`}}",
+    "ami_regions": "{{env `AWS_REGIONS`}}",
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
+    "ami_users": "{{env `AWS_SHARED_ACCOUNTS`}}",
+    "ami_description": "Kubernetes EKS Optimized AMI"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "us-east-1",
+      "ami_virtualization_type": "hvm",
+      "ami_name": "{{user `ami_name`}}",
+      "ami_users": "{{user `ami_users`}}",
+      "ami_regions": "{{user `ami_regions`}}",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "source_ami": "{{user `source_ami_id`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "run_tags": {
+        "creator": "{{user `creator`}}"
+      },
+      "tags": {
+        "created": "{{isotime}}",
+        "repo": "{{user `repo`}}",
+        "team": "{{user `team`}}",
+        "commit": "{{user `commit`}}",
+        "branch": "{{user `branch`}}",
+        "Name": "{{user `ami_name`}}",
+        "source_ami_id": "{{ user `source_ami_id`}}",
+        "aws_linux_arch": "{{user `aws_linux_arch`}}",
+        "kubernetes_version": "{{ user `kubernetes_version`}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "mkdir -p /etc/provisioners/bin",
+        "mkdir -p /etc/provisioners/files",
+        "chown -R {{user `ssh_username`}}:{{user `ssh_username`}} /etc/provisioners/bin",
+        "chown -R {{user `ssh_username`}}:{{user `ssh_username`}} /etc/provisioners/files"
+      ],
+      "execute_command": "echo 'packer' | sudo -S -E bash -eux '{{.Path}}'"
+    },
+    {
+      "type": "shell",
+      "pause_after": "15s",
+      "expect_disconnect": true,
+      "execute_command": "echo 'packer' | sudo -S -E bash -eux '{{.Path}}'",
+      "scripts": [
+        "{{template_dir}}/provisioners/addons/falco.bash"
+      ]
+    },
+    {
+      "type": "goss",
+      "sleep": "5s",
+      "use_sudo": true,
+      "version": "0.3.16",
+      "retry_timeout": "5s",
+      "remote_path": "goss",
+      "goss_file": "goss.yaml",
+      "format": "documentation",
+      "arch": "{{user `goss_arch`}}",
+      "tests": ["tests/goss/goss.yaml"],
+      "remote_folder": "/etc/provisioners/files",
+      "downloadPath": "/etc/provisioners/bin/goss",
+      "vars_env": {
+        "aws_linux_arch": "{{user `aws_linux_arch`}}"
+      }
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "strip_path": true,
+      "output": "{{template_dir}}/packer-output/{{user `ami_name`}}-manifest.json",
+      "custom_data": {
+        "branch": "{{user `branch`}}",
+        "ami_name": "{{user `ami_name`}}",
+        "accounts": "{{user `ami_users`}}",
+        "regions": "{{user `ami_regions`}}",
+        "aws_linux_arch": "{{user `aws_linux_arch`}}",
+        "kubernetes_version": "{{ user `kubernetes_version`}}"
+      }
+    },
+    {
+      "type": "shell-local",
+      "script": "{{template_dir}}/pipeline/publish.bash",
+      "execute_command": [
+        "bash",
+        "-c",
+        "{{.Script}} -f {{template_dir}}/packer-output/{{user `ami_name`}}-manifest.json"
+      ]
+    }
+  ]
+}
