@@ -1,0 +1,23 @@
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+**/_test
+*.out
+.aws-sam
+packaged.yml
+out.json
+**/bin
+**/*.log
+**/*.DS_Store
+**/.vscode
+**/.idea/
+**/.idea/*.xml
+packer-output/*
+# exception to the rule as we cannot commit empty directories
+!packer-output/.gitkeep
+goss-linux-*
+packer-provisioner-goss*
+.clusters

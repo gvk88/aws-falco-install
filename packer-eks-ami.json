@@ -79,9 +79,9 @@
       "goss_file": "goss.yaml",
       "format": "documentation",
       "arch": "{{user `goss_arch`}}",
-      "tests": ["tests/goss/goss.yaml"],
+      "tests": ["{{template_dir}}/tests/goss/goss.yaml"],
       "remote_folder": "/etc/provisioners/files",
-      "downloadPath": "/etc/provisioners/bin/goss",
+      "download_path": "/etc/provisioners/bin/goss",
       "vars_env": {
         "aws_linux_arch": "{{user `aws_linux_arch`}}"
       }
