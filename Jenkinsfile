@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-library "cloud-jenkins-common-libraries@master"
+//library "cloud-jenkins-common-libraries@master"
 
 def labelId = "${UUID.randomUUID().toString()}"
 def label = "Kubernetes-ami-pr-${labelId}"
