@@ -1,45 +1,10 @@
-port:
-  tcp:22:
-    listening: true
-    ip:
-      - 0.0.0.0
-  tcp6:22:
-    listening: true
-    ip:
-      - '::'
 service:
-  sshd:
-    enabled: true
-    running: true
-user:
-  sshd:
-    exists: true
-    uid: 74
-    gid: 74
-    groups:
-      - sshd
-    home: /var/empty/sshd
-    shell: /sbin/nologin
-group:
-  sshd:
-    exists: true
-    gid: 74
-process:
-  sshd:
-    running: true
-file:
   {{if eq .Env.aws_linux_arch "amazon-linux-2"}}
-  /usr/share/falco:
-    exists: true
-    filetype: directory
-  /usr/share/falco/falco_module.ko:
-    filetype: file
-    exists: true
-    owner: root
-    group: root
-  /usr/share/falco/falco_probe.o:
-    filetype: file
-    exists: true
-    owner: root
-    group: root
+  falco:
+    enabled: true
+    running: false
   {{end}}
+process:
+  falco:
+    running: false
+

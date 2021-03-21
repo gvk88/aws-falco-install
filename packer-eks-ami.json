@@ -89,7 +89,7 @@
     {
       "type": "manifest",
       "strip_path": true,
-      "output": "{{template_dir}}/{{user `ami_name`}}-manifest.json",
+      "output": "{{template_dir}}/packer-output/{{user `ami_name`}}-manifest.json",
       "custom_data": {
         "branch": "{{user `branch`}}",
         "ami_name": "{{user `ami_name`}}",
@@ -98,15 +98,6 @@
         "aws_linux_arch": "{{user `aws_linux_arch`}}",
         "kubernetes_version": "{{ user `kubernetes_version`}}"
       }
-    },
-    {
-      "type": "shell-local",
-      "script": "{{template_dir}}/pipeline/publish.bash",
-      "execute_command": [
-        "bash",
-        "-c",
-        "{{.Script}} -f {{template_dir}}/{{user `ami_name`}}-manifest.json"
-      ]
     }
   ]
 }

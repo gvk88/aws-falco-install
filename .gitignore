@@ -13,8 +13,10 @@ out.json
 **/*.log
 **/*.DS_Store
 **/.vscode
-**/.idea/
-**/.idea/*.xml
+.idea/*.xml
+packer-output/*
+# exception to the rule as we cannot commit empty directories
+!packer-output/.gitkeep
 goss-linux-*
 packer-provisioner-goss*
 .clusters
