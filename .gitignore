@@ -15,9 +15,6 @@ out.json
 **/.vscode
 **/.idea/
 **/.idea/*.xml
-packer-output/*
-# exception to the rule as we cannot commit empty directories
-!packer-output/.gitkeep
 goss-linux-*
 packer-provisioner-goss*
 .clusters

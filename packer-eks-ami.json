@@ -89,7 +89,7 @@
     {
       "type": "manifest",
       "strip_path": true,
-      "output": "{{template_dir}}/packer-output/{{user `ami_name`}}-manifest.json",
+      "output": "{{template_dir}}/{{user `ami_name`}}-manifest.json",
       "custom_data": {
         "branch": "{{user `branch`}}",
         "ami_name": "{{user `ami_name`}}",
@@ -105,7 +105,7 @@
       "execute_command": [
         "bash",
         "-c",
-        "{{.Script}} -f {{template_dir}}/packer-output/{{user `ami_name`}}-manifest.json"
+        "{{.Script}} -f {{template_dir}}/{{user `ami_name`}}-manifest.json"
       ]
     }
   ]

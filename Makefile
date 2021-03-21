@@ -28,7 +28,7 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf packer-provisioner-goss packer-output/kaas-*
+	rm -rf packer-provisioner-goss kube-*
 
 .PHONY: validate
 validate:
