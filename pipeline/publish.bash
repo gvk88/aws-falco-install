@@ -27,6 +27,14 @@ function usage()
     "
 }
 
+# Read the git branch name from the Packer.io manifest file. Exit if the branch value is not
+# "master". AMI ID(s) are only published from the master branch.
+branch=$(jq -r '.builds[-1].custom_data.branch' "$FILE")
+if [[ "$branch" != "master" ]]; then
+    echo "not publishing ami id for branch: $branch"
+    exit 0
+fi
+
 # updateSSM performs an AWS SSM put-parameter to update the parameter with the latest value
 # parameters: version architecture region value
 function updateSSM()

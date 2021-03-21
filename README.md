@@ -24,6 +24,6 @@ Parse a Packer.io manifest file for image metadata and store the AMI ID for all 
     -h,               Show this message.
 ```
 
-## Jenkins
+## git hub
 
-A [Jenkins job] is used  for building and publishing new AMI on updates to this repository
+A [github action] is used  for building and publishing new AMI on updates to this repository

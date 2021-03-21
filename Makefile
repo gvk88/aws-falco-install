@@ -1,7 +1,5 @@
 aws_region ?= us-east-1
-aws_access_key ?= ${AWS_ACCESS_KEY}
-aws_secret_key ?= ${AWS_SECRET_KEY}
-build_date = $(shell date +'%Y%m%d%H%M')
+build_date = $(shell date +'%s%N')
 kubernetes_version ?= 1.16
 
 arch ?= x86_64
@@ -15,7 +13,7 @@ instance_type ?= m5.large
 aws_linux_arch ?= amazon-linux-2
 endif
 
-ami_name ?= packer-eks-node-$(kubernetes_version)-$(aws_linux_arch)-v$(build_date)
+ami_name ?= Kube-eks-node-$(kubernetes_version)-$(aws_linux_arch)-v$(build_date)
 
 # Lookup the given latest AWS EKS AMI ID to build from
 source_ami_id ?= $(shell aws ssm get-parameter --name /aws/service/eks/optimized-ami/$(kubernetes_version)/$(aws_linux_arch)/recommended/image_id --region $(aws_region) --query "Parameter.Value" --output text)
@@ -30,7 +28,7 @@ endif
 
 .PHONY: clean
 clean:
-	rm -rf packer-provisioner-goss
+	rm -rf packer-provisioner-goss packer-output/kaas-*
 
 .PHONY: validate
 validate:
@@ -71,6 +69,3 @@ all: 1.16 1.17 1.18
 
 1.18: init
 	$(MAKE) ami kubernetes_version=1.18
-
-
-
