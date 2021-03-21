@@ -13,7 +13,7 @@ instance_type ?= m5.large
 aws_linux_arch ?= amazon-linux-2
 endif
 
-ami_name ?= Kube-eks-node-$(kubernetes_version)-$(aws_linux_arch)-v$(build_date)
+ami_name ?= Kube-eks-node-$(kubernetes_version)-$(aws_linux_arch)-$(build_date)
 
 # Lookup the given latest AWS EKS AMI ID to build from
 source_ami_id ?= $(shell aws ssm get-parameter --name /aws/service/eks/optimized-ami/$(kubernetes_version)/$(aws_linux_arch)/recommended/image_id --region $(aws_region) --query "Parameter.Value" --output text)
