@@ -31,7 +31,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Building ami with falco installed
-        run: echo "Building ami with falco instaled on branch $GITHUB_REF"|make clean 
+        run: echo "Building ami with falco instaled on branch $GITHUB_REF"|make clean 1.16
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
