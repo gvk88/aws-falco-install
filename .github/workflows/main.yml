@@ -39,7 +39,6 @@ jobs:
           branch: ${{ steps.extract_branch.outputs.branch }}
 
   release:
-    if: ${{ github.ref == 'main' }}
     needs: build
     runs-on: ubuntu-latest
     steps:      
